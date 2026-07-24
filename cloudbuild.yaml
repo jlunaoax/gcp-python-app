@@ -1,14 +1,9 @@
 steps:
-  - name : 'python:3.15-rc-alpine'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        echo "=== Starting Python hello.py ==="
-        python hello.py
-        echo "=== Finished hello.py ==="
+  # Step 1: Run your simple Python script using a light Python container
+  - name: 'python:3.11-slim'
+    entrypoint: 'python'
+    args: ['hello.py']
 
+# Optional: set logging to direct to Cloud Logging without requiring a GCS bucket
 options:
   logging: CLOUD_LOGGING_ONLY
-
-timeout: '10s'
