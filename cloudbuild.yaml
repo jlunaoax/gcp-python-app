@@ -1,5 +1,5 @@
 steps:
-  - name : 'python'
+  - name : 'python:3.15-rc-alpine'
     entrypoint: 'bash'
     args:
       - '-c'
