@@ -1,0 +1,47 @@
+# cloudbuild.yaml
+# Build Docker image and push to Artifact Registry
+
+# Replace values when creating the trigger or use substitutions
+# Example image path: asia-south1-docker.pkg.dev/PROJECT_ID/demo-app-repo/demo-app:$SHORT_SHA
+
+steps:
+  # 1) Build image (using docker builder)
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'build',
+        '-t',
+        'us-central1-docker.pkg.dev/devopstraining-499021/python-app-image/app-image:v2',
+        '.'
+      ]
+
+
+
+  # 2) Push image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'push',
+        'us-central1-docker.pkg.dev/devopstraining-499021/python-app-image/app-image:v2'
+      ]
+  
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
+    id: 'deploy-cloudrun'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        echo "🚀 Deploying image to Cloud Run..."
+        gcloud run deploy py-app \
+          --image=us-central1-docker.pkg.dev/devopstraining-499021/python-app-image/app-image:v2 \
+          --region=us-central1 \
+          --platform=managed \
+          --allow-unauthenticated \
+          --port=8080
+        echo "✅ Deployed successfully!"
+
+images:
+  - 'us-central1-docker.pkg.dev/devopstraining-499021/python-app-image/app-image:v2'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
