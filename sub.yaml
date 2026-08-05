@@ -1,0 +1,34 @@
+substitutions:
+  _ENV: "staging"
+  _SERVICE_NAME: "demo-service"
+  _REGION: "us-central1"
+
+
+steps:
+  - name : 'ubuntu'
+    entrypoint: 'bash'
+    args: 
+      - '-c'
+      - |
+        echo "===== Built-in Variables ====="
+        echo "Project ID: $PROJECT_ID"
+        echo "Build ID: $BUILD_ID"
+        echo "Commit SHA (SHORT): $SHORT_SHA"
+        echo "Branch Name: $BRANCH_NAME"
+        echo "Repo Name: $REPO_NAME"
+        echo "Trigger Name: $TRIGGER_NAME"
+        echo "================================"
+
+  - name : 'ubuntu'
+    entrypoint: 'bash'
+    args: 
+      - '-c'
+      - |
+        echo "===== Custom Variables ====="
+        echo "Environment: ${_ENV}"
+        echo "Service Name: ${_SERVICE_NAME}"
+        echo "Region: ${_REGION}"
+        echo "================================"
+
+options:
+  logging: CLOUD_LOGGING_ONLY
