@@ -1,0 +1,20 @@
+steps:
+  - id: "step1"
+    name: "ubuntu"
+    entrypoint: "bash"
+    args: ["-c", "echo Step1 completed; sleep 1"]
+
+  - id: "step2"
+    name: "ubuntu"
+    waitFor: ["step1"]
+    entrypoint: "bash"
+    args: ["-c", "echo Step2 running in parallel with Step3; sleep 2; echo Step2 done"]
+
+  - id: "step3"
+    name: "ubuntu"
+    waitFor: ["step1"]
+    entrypoint: "bash"
+    args: ["-c", "echo Step3 running in parallel with Step2; sleep 1; echo Step3 done"]
+
+options:
+  logging: CLOUD_LOGGING_ONLY

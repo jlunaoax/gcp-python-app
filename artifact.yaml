@@ -1,0 +1,26 @@
+substitutions:
+  _ENV: "staging"
+  _SERVICE_NAME: "demo-service"
+  _REGION: "us-central1"
+
+
+steps:
+  - name : 'ubuntu'
+    entrypoint: 'bash' 
+    args: 
+      - '-c' 
+      - |  
+        mkdir -p output
+        echo "===== Custom Variables =====" > output/info.txt
+        echo "Environment: ${_ENV}" >> output/info.txt
+        echo "Service Name: ${_SERVICE_NAME}" >> output/info.txt
+        echo "Region: ${_REGION}" >> output/info.txt 
+        echo "================================" >> output/info.txt
+
+artifacts:
+  objects:
+    location: 'gs://gcp-devops-course-bucket-rjj/artifacts-demo/'
+    paths: ['output/info.txt'] 
+
+options:
+  logging: CLOUD_LOGGING_ONLY

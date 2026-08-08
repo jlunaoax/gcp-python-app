@@ -1,0 +1,21 @@
+steps:
+  - id: "step1"
+    name: "ubuntu"
+    entrypoint: "bash"
+    args: ["-c", "echo Step1 done"]
+
+  - id: "step2"
+    name: "ubuntu"
+    waitFor: ["step1"]
+    allowFailure: true
+    entrypoint: "bash"
+    args: ["-c", "echo Step2 will fail but build continues; exit 1"]
+
+  - id: "step3"
+    name: "ubuntu"
+    waitFor: ["step1", "step2"]
+    entrypoint: "bash"
+    args: ["-c", "echo Step3 still runs even if Step2 failed"]
+
+options:
+  logging: CLOUD_LOGGING_ONLY

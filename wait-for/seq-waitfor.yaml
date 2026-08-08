@@ -1,0 +1,18 @@
+steps:
+  - id: "step1"
+    name: "ubuntu"
+    entrypoint: "bash"
+    args: ["-c", "echo Step1 started; sleep 1; echo Step1 finished"]
+
+  - id: "step2"
+    name: "ubuntu"
+    entrypoint: "bash"
+    args: ["-c", "echo Step2 started; sleep 1; echo Step2 finished"]
+
+  - id: "step3"
+    name: "ubuntu"
+    entrypoint: "bash"
+    args: ["-c", "echo Step3 started; sleep 1; echo Step3 finished"]
+
+options:
+  logging: CLOUD_LOGGING_ONLY
